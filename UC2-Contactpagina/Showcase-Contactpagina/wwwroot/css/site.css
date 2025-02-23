@@ -19,9 +19,35 @@
     margin: 15px 0px 15px 0px
 }
 
+.availability__flex {
+    display: flex;
+    gap: 10px;
+}
+
 .fx-col {
     flex-direction: column;
 }
 
+.personalia__header {
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.person-logo {
+    align-items: center;
+    border: 4px solid black;
+    border-radius: 50%;
+    margin: 15px 0px 15px 0px;
+    width: auto;
+    height: auto;
+    animation: glow 3s ease alternate;
+}
+.person-name{
+    text-align: center;
+}
 @media only screen and (min-width: 800px) {
 }
