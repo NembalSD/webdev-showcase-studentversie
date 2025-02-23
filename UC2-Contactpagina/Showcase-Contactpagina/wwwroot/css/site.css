@@ -37,6 +37,14 @@
     text-align: center;
 }
 
+.form-contactpagina {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-content: baseline;
+    align-items: baseline;
+}
+
 .person-logo {
     align-items: center;
     border: 4px solid black;
@@ -46,8 +54,19 @@
     height: auto;
     animation: glow 3s ease alternate;
 }
-.person-name{
+.person-name {
     text-align: center;
 }
+
+.waiting,
+.waiting * {
+    cursor: wait !important;
+}
+
+#errorfield {
+    color: red;
+    text-align: center;
+}
+
 @media only screen and (min-width: 800px) {
 }

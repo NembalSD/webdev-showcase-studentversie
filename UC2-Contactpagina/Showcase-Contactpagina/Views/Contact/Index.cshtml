@@ -1,150 +1,212 @@
 ﻿@model Contactform
 @{
-    ViewData["Title"] = "Contactpagina";
+	ViewData["Title"] = "Contactpagina";
 }
-<div class="page">
-    <section class="contact">
-        <div>
-            <div class="personalia__header">
-                <h1>Contact</h1>
-                <img class="person-logo" src="images/person-pasfoto.png"/>
-                <h2 class="person-name">Roban Visser</h2>
-                <p id="errorfield"></p>
-            </div>
-            <hr />
-            <div class="availability">
-                <h4>Wanneer ben ik aanwezig?</h4>
-                <div class="availability__flex">
-                    <div>
-                        <p>ma 9-17</p>
-                    </div>
-                    <div>
-                        <p>di 10-12</p>
-                    </div>
-                    <div>
-                        <p>wo 9-17</p>
-                    </div>
-                    <div>
-                        <p>do 14-17</p>
-                    </div>
-                    <div>
-                        <p>vr 9-17</p>
-                    </div>
-                </div>
-                <hr />
-            </div>
-        </div>
-        
-        
-        
-        <p>@ViewBag.Message</p>
-        <form method="post" class="form-contactpagina">
+<body>
+	<div class="page">
+		<section class="contact">
+			<div>
+				<div class="personalia__header">
+					<h1>Contact</h1>
+					<img class="person-logo" src="images/person-pasfoto.png" />
+					<h2 class="person-name">Roban Visser</h2>
+				</div>
+				<hr />
+				<div class="availability">
+					<p id="errorfield"></p>
+					<h4>Wanneer ben ik aanwezig?</h4>
+					<div class="availability__flex">
+						<div>
+							<p>ma 9-17</p>
+						</div>
+						<div>
+							<p>di 10-12</p>
+						</div>
+						<div>
+							<p>wo 9-17</p>
+						</div>
+						<div>
+							<p>do 14-17</p>
+						</div>
+						<div>
+							<p>vr 9-17</p>
+						</div>
+					</div>
+					<hr />
+				</div>
+			</div>
+			<div>
+				<form method="post" class="form-contactpagina">
+					<h4>Stuur mij een bericht</h4>
+					<div class="form-contactpagina__inputelement fx-col">
+						<label for="firstname">Voornaam: </label>
+						<input type="text" asp-for="FirstName" name="firstname" id="firstname" required>
+					</div>
 
-            <div class="form-contactpagina__inputelement fx-col">
-                <label for="firstname">Voornaam: </label>
-                <input type="text" asp-for="FirstName" name="firstname" id="firstname" required>
-            </div>
+					<div class="form-contactpagina__inputelement fx-col">
+						<label for="lastname">Achternaam: </label>
+						<input type="text" asp-for="LastName" name="lastname" id="lastname" required>
+					</div>
 
-            <div class="form-contactpagina__inputelement fx-col">
-                <label for="lastname">Achternaam: </label>
-                <input type="text" asp-for="LastName" name="lastname" id="lastname" required>
-            </div>
+					<div class="form-contactpagina__inputelement fx-col">
+						<label for="email">E-mailadres: </label>
+						<input type="email" asp-for="Email" name="email" id="email">
+					</div>
 
-            <div class="form-contactpagina__inputelement fx-col">
-                <label for="email">E-mailadres: </label>
-                <input type="email" asp-for="Email" name="email" id="email">
-            </div>
+					<div class="form-contactpagina__inputelement fx-col">
+						<label for="phone">Telefoonnummer: </label>
+						<input type="tel" asp-for="Phone" name="phone" id="phone">
+					</div>
 
-            <div class="form-contactpagina__inputelement fx-col">
-                <label for="phone">Telefoonnummer: </label>
-                <input type="tel" asp-for="Phone" name="phone" id="phone">
-            </div>
+					<div class="form-contactpagina__inputelement">
+						<input type="submit" value="Verstuur!" style="cursor:pointer">
+					</div>
+				</form>
+			</div>
+		</section>
+	</div>
+</body>
 
-            <div class="form-contactpagina__inputelement">
-                <input type="submit" value="Verstuur!" disabled>
-            </div>
-
-        </form>
-
-    </section>
-</div>
 
 
 <script>
-   const inputEmail = document.getElementById('email');
+	const inputEmail = document.getElementById('email');
+	 const inputFirstName = document.getElementById('firstname');
+	 const inputLastName = document.getElementById('lastname');
+	 const inputPhone = document.getElementById('phone');
 
+	const validateEmail = () => {
+		 console.log("validateEmail wordt aangeroepen");
+		if (inputEmail.validity.typeMismatch) {
+			inputEmail.setCustomValidity("Voer een geldig e-mailadres in!");
+			inputEmail.reportValidity();
+		} else if (inputEmail.value.length > 80) {
+			inputEmail.setCustomValidity("Email moet niet langer dan 80 tekens zijn!");
+			inputEmail.reportValidity();
+		} else {
+			inputEmail.setCustomValidity("");
+		}
+	}
 
-   const validateEmail = () => { 
-       if (inputEmail.validity.typeMismatch) {
-           inputEmail.setCustomValidity("Voer een geldig e-mailadres in!");
-           inputEmail.reportValidity();
-       } else if (inputEmail.value.length > 80) {
-           inputEmail.setCustomValidity("Email moet niet langer dan 80 tekens zijn!");
-       } else {
-           inputEmail.setCustomValidity("");
-       }
-   }
+	const validateFirstName = () => {
+		 console.log("validateFirstName wordt aangeroepen");
+		if (inputFirstName.value.length > 60) {
+			inputFirstName.setCustomValidity("Voornaam moet niet langer dan 60 tekens zijn!");
+			inputFirstName.reportValidity();
+		} else {
+			inputFirstName.setCustomValidity("");
+		}
+	}
 
-   const validateForm = () => {
-       validateEmail();
-   }
+	const validateLastName = () => {
+		 console.log("validateLastName wordt aangeroepen");
+		 if (inputLastName.value.length > 60) {
+			 inputLastName.setCustomValidity("Achternaam moet niet langer dan 60 tekens zijn!");
+			 inputLastName.reportValidity();
+		 } else {
+			 inputLastName.setCustomValidity("");
+		 }
+	}
 
-   // Event listener voor email
-   // Aanbevolen events voor formulieren: https://github.com/Windesheim-HBO-ICT/client_studenten/blob/main/lessen/week-2/les-1/form-constraint-validation-api/studentversie/events-voor-invoer-validatie.md
-   inputEmail.addEventListener("blur", validateEmail);
-   inputEmail.addEventListener("input", validateEmail);
+	const validateDutchPhone = (phone) => {
+		 const regex = /^(?:\+31|0)(6\d{8}|\d{9})$/;
+		 return regex.test(phone);
+	}
 
-   // Selecteer het formelement
-   const form = document.querySelector('.form-contactpagina');
+	const validatePhone = () => {
 
-   // Event listener voor formulierinzending
-   form.addEventListener('submit', function (event) {
-       event.preventDefault(); // Voorkom standaard formulierinzending
+		console.log("validatePhone wordt aangeroepen");
+		if (validateDutchPhone(inputPhone.value) == false) {
+			inputPhone.setCustomValidity("Voer een geldig telefoonnummer in!");
+			inputPhone.reportValidity();
+		} else if (inputPhone.value.length > 20) {
+			inputPhone.setCustomValidity("Telefoonnummer moet niet langer dan 20 karakters zijn!");
+			inputPhone.reportValidity();
+		} else {
+			inputPhone.setCustomValidity("");
+		}
+	}
 
-      // Valideer alle velden voor de zekerheid
-       validateForm();
+	const validateForm = () => {
+		validateEmail();
+		validateFirstName();
+		validateLastName();
+		validatePhone();
+	}
 
-       // Verkrijg CSRF-token van het formulier
-       const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+	// Event listener voor email
+	// Aanbevolen events voor formulieren: https://github.com/Windesheim-HBO-ICT/client_studenten/blob/main/lessen/week-2/les-1/form-constraint-validation-api/studentversie/events-voor-invoer-validatie.md
+	inputEmail.addEventListener("blur", validateEmail);
+	inputEmail.addEventListener("input", validateEmail);
 
-       // Serialiseer formuliergegevens
-       const formData = new URLSearchParams();
+	inputFirstName.addEventListener("blur", validateFirstName);
+	inputFirstName.addEventListener("input", validateFirstName);
 
-       formData.append('firstname', form.firstname.value);
-       formData.append('lastname', form.lastname.value);
-       formData.append('email', form.email.value);
-       formData.append('phone', form.phone.value);
-        
-       formData.append('__RequestVerificationToken', csrfToken); // Voeg CSRF-token toe
+	inputLastName.addEventListener("blur", validateLastName);
+	inputLastName.addEventListener("input", validateLastName);
 
-       // Voer een POST-verzoek uit
-       fetch('/Contact', {
-           method: 'POST',
-           headers: {
-               'Content-Type': 'application/x-www-form-urlencoded' // Stel de inhoudstype in
-           },
-           body: formData // Stuur de geserialiseerde formuliergegevens als de body
-       })
-           .then(response => {
-               if (!response.ok) {
-                   throw new Error('Netwerkresponse was niet ok');
-               }
-               return response.text();
-           })
-           .then(data => {
-               // Verwerk succesvolle formulierinzending
-               console.log('Formulier succesvol ingediend:', data);
-               alert("Het contactformulier is verstuurd!");
-               // Optioneel: je kunt hier een redirect uitvoeren of een succesbericht tonen
-           })
-           .catch(error => {
-               console.error('Er was een probleem met de formulierinzending:', error);
+	inputPhone.addEventListener("blur", validatePhone);
+	inputPhone.addEventListener("input", validatePhone);
 
-               alert(error.message)
+	// Selecteer het formelement
+	const form = document.querySelector('.form-contactpagina');
 
-               // Verwerk fouten hier
-           });
-   });
+	// Event listener voor formulierinzending
+	form.addEventListener('submit', function (event) {
+		event.preventDefault(); // Voorkom standaard formulierinzending
+
+		// Cursor omzetten naar een laadrondje
+		document.body.classList.add("waiting");
+
+	   // Valideer alle velden voor de zekerheid
+		validateForm();
+
+		// Verkrijg CSRF-token van het formulier
+		const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+		// Serialiseer formuliergegevens
+		const formData = new URLSearchParams();
+
+		formData.append('firstname', form.firstname.value);
+		formData.append('lastname', form.lastname.value);
+		formData.append('email', form.email.value);
+		formData.append('phone', form.phone.value);
+
+		formData.append('__RequestVerificationToken', csrfToken); // Voeg CSRF-token toe
+
+		// Voer een POST-verzoek uit
+		fetch('/Contact', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded' // Stel de inhoudstype in
+			},
+			body: formData // Stuur de geserialiseerde formuliergegevens als de body
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('De mailserver is niet beschikbaar. Probeer het later opnieuw.');
+				}
+				return response.text();
+			})
+			.then(data => {
+				// Verwerk succesvolle formulierinzending
+				document.body.style.cursor = "";
+				console.log('Formulier succesvol ingediend:', data);
+				form.reset();
+				document.getElementById('errorfield').style.color = "green";
+				document.getElementById('errorfield').innerHTML = "Het contactformulier is verstuurd!";
+				// Optioneel: je kunt hier een redirect uitvoeren of een succesbericht tonen
+			})
+			.catch(error => {
+				console.error('Er was een probleem met de formulierinzending:', error);
+				document.getElementById('errorfield').style.color = "red";
+				document.getElementById('errorfield').innerHTML = error.message;
+				// Verwerk fouten hier
+			}).finally(() => {
+				// Cursor terug naar normaal
+				document.body.classList.remove("waiting");
+			});;
+	});
 
 
 
