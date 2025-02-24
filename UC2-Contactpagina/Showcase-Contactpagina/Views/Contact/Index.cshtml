@@ -2,6 +2,14 @@
 @{
 	ViewData["Title"] = "Contactpagina";
 }
+<div id="captcha">
+	<div>
+		<span id="captchaCode"></span>
+		<button onclick="generateCaptcha()">Vernieuwen</button>
+	</div>
+	<input type="text" id="captchaInput" placeholder="Voer CAPTCHA in">
+	<button onclick="validateCaptcha()">Verifiëren</button>
+</div>
 <body>
 	<div class="page">
 		<section class="contact">
@@ -59,7 +67,7 @@
 					</div>
 
 					<div class="form-contactpagina__inputelement">
-						<input type="submit" value="Verstuur!" style="cursor:pointer">
+						<input type="submit" value="Verstuur!" style="cursor:pointer" id="submitbutton" disabled>
 					</div>
 				</form>
 			</div>
@@ -74,6 +82,8 @@
 	 const inputFirstName = document.getElementById('firstname');
 	 const inputLastName = document.getElementById('lastname');
 	 const inputPhone = document.getElementById('phone');
+	 const errorField = document.getElementById('errorfield');
+	 var captchaOutput = false;
 
 	const validateEmail = () => {
 		 console.log("validateEmail wordt aangeroepen");
@@ -153,6 +163,7 @@
 
 	// Event listener voor formulierinzending
 	form.addEventListener('submit', function (event) {
+		
 		event.preventDefault(); // Voorkom standaard formulierinzending
 
 		// Cursor omzetten naar een laadrondje
@@ -193,14 +204,14 @@
 				document.body.style.cursor = "";
 				console.log('Formulier succesvol ingediend:', data);
 				form.reset();
-				document.getElementById('errorfield').style.color = "green";
-				document.getElementById('errorfield').innerHTML = "Het contactformulier is verstuurd!";
+				errorField.style.color = "green";
+				errorField.innerHTML = "Het contactformulier is verstuurd!";
 				// Optioneel: je kunt hier een redirect uitvoeren of een succesbericht tonen
 			})
 			.catch(error => {
 				console.error('Er was een probleem met de formulierinzending:', error);
-				document.getElementById('errorfield').style.color = "red";
-				document.getElementById('errorfield').innerHTML = error.message;
+				errorField.style.color = "red";
+				errorField.innerHTML = error.message;
 				// Verwerk fouten hier
 			}).finally(() => {
 				// Cursor terug naar normaal
@@ -208,6 +219,36 @@
 			});;
 	});
 
+	function generateCaptcha() {
+		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		let captcha = '';
+		for (let i = 0; i < 6; i++) {
+			captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+		}
+		document.getElementById('captchaCode').innerText = captcha;
+		document.getElementById('captchaInput').value = '';
+	}
 
+	function validateCaptcha() {
+		const userInput = document.getElementById('captchaInput').value;
+		const captchaText = document.getElementById('captchaCode').innerText;
+		const captcha = document.getElementById('captcha');
+		const submit = document.getElementById('submitbutton');
 
+		if (userInput === captchaText) {
+			captcha.remove();
+			captchaOutput = true;
+			submit.removeAttribute('disabled');
+			errorField.innerHTML = "";
+			return true;
+		} else {
+			errorField.innerHTML = "CAPTCHA onjuist. Probeer opnieuw.";
+			generateCaptcha();
+			return false;
+		}
+	}
+
+	window.onload = function() {
+		generateCaptcha();
+	};
 </script>

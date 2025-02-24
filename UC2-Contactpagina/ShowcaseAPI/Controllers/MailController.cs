@@ -25,7 +25,9 @@ namespace ShowcaseAPI.Controllers
                     EnableSsl = true
                 };
 
-                client.Send(form.Email, "to@example.com", "Hello world", "testbody");
+                string emailBody = $"Hallo ik ben {form.FirstName} {form.LastName}, en ik wil graag contact leggen. \n Mijn telefoonnummer is: {form.Phone} en mijn email is {form.Email}";
+
+                client.Send(form.Email, "to@example.com", "Contactverzoek", emailBody);
                 Debug.WriteLine("Sent");
             }
             catch (Exception ex)
